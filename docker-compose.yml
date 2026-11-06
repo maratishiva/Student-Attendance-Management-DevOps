@@ -1,0 +1,12 @@
+services:
+  attendance-app:
+    build: .
+    container_name: student-attendance
+    ports:
+      - "3000:3000"
+    volumes:
+      - attendance-data:/app/database
+    restart: unless-stopped
+
+volumes:
+  attendance-data:

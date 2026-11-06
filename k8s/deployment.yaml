@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-attendance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: student-attendance
+  template:
+    metadata:
+      labels:
+        app: student-attendance
+    spec:
+      containers:
+        - name: attendance-app
+          image: student-attendance-management:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+          volumeMounts:
+            - name: attendance-storage
+              mountPath: /app/database
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+      volumes:
+        - name: attendance-storage
+          persistentVolumeClaim:
+            claimName: attendance-data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-attendance-service
+spec:
+  type: NodePort
+  selector:
+    app: student-attendance
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30080

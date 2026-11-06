@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Attendance Management</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">COLLEGE MANAGEMENT PORTAL</p>
+      <h1>Student Attendance</h1>
+      <p class="subtitle">Daily attendance · Monthly reports · Student history</p>
+    </div>
+    <span class="live-pill"><span></span> System ready</span>
+  </header>
+
+  <main class="container">
+    <section class="stats-grid">
+      <article class="stat-card"><span>Total students</span><strong id="totalStudents">0</strong></article>
+      <article class="stat-card"><span>Present periods</span><strong id="presentCount">0</strong></article>
+      <article class="stat-card"><span>Absent periods</span><strong id="absentCount">0</strong></article>
+      <article class="stat-card"><span>Attendance rate</span><strong id="attendanceRate">0%</strong></article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div><p class="eyebrow">CLASS SETUP</p><h2>Add a student</h2></div>
+      </div>
+      <form id="studentForm" class="student-form">
+        <label>Student name<input id="studentName" name="studentName" required placeholder="e.g. Pooja"></label>
+        <label>Roll number<input id="studentRoll" name="studentRoll" required placeholder="e.g. 1121"></label>
+        <label>Department<input id="studentDepartment" name="studentDepartment" required placeholder="e.g. CSE-AIML"></label>
+        <button class="button primary" type="submit">Add student</button>
+      </form>
+      <p id="message" class="message" role="status"></p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading attendance-heading">
+        <div><p class="eyebrow">DAILY REGISTER</p><h2>Mark attendance</h2><p class="muted">Choose Present or Absent for each of the seven periods.</p></div>
+        <label class="date-label">Attendance date<input type="date" id="attendanceDate" name="attendanceDate"></label>
+      </div>
+      <div class="toolbar">
+        <button id="markAllPresent" class="button secondary" type="button">Mark all present</button>
+        <button id="markAllAbsent" class="button secondary" type="button">Mark all absent</button>
+        <button id="saveAttendance" class="button primary" type="button">Save attendance</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Roll no.</th><th>Student</th><th>Department</th><th colspan="7">Periods</th></tr>
+          <tr class="period-head"><th></th><th></th><th></th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>P6</th><th>P7</th></tr></thead>
+          <tbody id="studentTableBody"><tr><td colspan="10" class="empty">Loading students…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">PERFORMANCE</p><h2>Monthly attendance report</h2><p class="muted">Working periods are periods for which attendance has been saved.</p></div></div>
+      <div class="toolbar report-toolbar">
+        <label>Report month<input type="month" id="reportMonth" name="reportMonth"></label>
+        <label>Low attendance threshold (%)<input type="number" id="attendanceLimit" name="attendanceLimit" min="0" max="100" value="75"></label>
+        <button id="loadReport" class="button secondary" type="button">Refresh report</button>
+        <button id="exportCSV" class="button primary" type="button">Export CSV</button>
+      </div>
+      <p id="reportMessage" class="message" role="status"></p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Roll no.</th><th>Student</th><th>Working periods</th><th>Present</th><th>Absent</th><th>Attendance</th><th>Status</th></tr></thead>
+        <tbody id="reportTableBody"><tr><td colspan="7" class="empty">Select a month to view the report.</td></tr></tbody>
+      </table></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">INDIVIDUAL RECORD</p><h2>Student attendance history</h2><p class="muted">View every saved date and period for one student.</p></div></div>
+      <label class="history-select">Select student
+        <select id="historyStudent" name="historyStudent"><option value="">Select a student</option></select>
+      </label>
+      <p id="historyMessage" class="message" role="status">Choose a student to view attendance history.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Date</th><th>Roll number</th><th>Student name</th><th>Period</th><th>Status</th></tr></thead>
+        <tbody id="historyTableBody"><tr><td colspan="5" class="empty">No student selected.</td></tr></tbody>
+      </table></div>
+    </section>
+    <footer>Student Attendance Management System · DevOps project</footer>
+  </main>
+</body>
+</html>
